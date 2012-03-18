@@ -1,0 +1,98 @@
+
+/* gettext library */
+
+var catalog = new Array();
+
+function pluralidx(count) { return (count == 1) ? 0 : 1; }
+catalog['Above average'] = '\u05d2\u05d1\u05d5\u05d4';
+catalog['Annotate'] = '\u05d4\u05d0\u05d9\u05e8\u05d5';
+catalog['Average'] = '\u05de\u05de\u05d5\u05e6\u05e2';
+catalog['Below average'] = '\u05e0\u05de\u05d5\u05da';
+catalog['Cancel'] = '\u05d1\u05d8\u05dc';
+catalog['Delete can not be un-done. Are you sure?'] = '\u05dc\u05d0 \u05e0\u05d9\u05ea\u05df \u05dc\u05d1\u05d8\u05dc \u05de\u05d7\u05d9\u05e7\u05d4, \u05d4\u05d0\u05dd \u05d0\u05ea\u05d4 \u05d1\u05d8\u05d5\u05d7?';
+catalog['Extremely above average'] = '\u05d2\u05d1\u05d5\u05d4 \u05de\u05d0\u05d5\u05d3';
+catalog['Extremely below average'] = '\u05e0\u05de\u05d5\u05da \u05de\u05d0\u05d5\u05d3';
+catalog['Factional discipline'] = '\u05de\u05e9\u05de\u05e2\u05ea \u05e1\u05d9\u05e2\u05ea\u05d9\u05ea';
+catalog['Loading...'] = '\u05d8\u05d5\u05e2\u05df...';
+catalog['Percentile'] = '\u05d0\u05d7\u05d5\u05d6\u05d5\u05df';
+catalog['Please make a selection.'] = '\u05d0\u05e0\u05d0 \u05e1\u05de\u05e0\u05d5 \u05d0\u05ea \u05d4\u05e7\u05d8\u05e2 \u05d0\u05dc\u05d9\u05d5 \u05de\u05ea\u05d9\u05d9\u05d7\u05e1\u05ea \u05d4\u05d4\u05d0\u05e8\u05d4';
+catalog['Sorry, only logged users can annotate.'] = '\u05de\u05e6\u05d8\u05e2\u05e8, \u05e8\u05e7 \u05de\u05e9\u05ea\u05de\u05e9\u05d9\u05dd \u05d9\u05db\u05d5\u05dc\u05d9\u05dd \u05dc\u05d4\u05d0\u05d9\u05e8';
+catalog['about'] = '\u05d0\u05d5\u05d3\u05d5\u05ea';
+catalog['members'] = '\u05d7"\u05db\u05d9\u05dd';
+catalog['more'] = '\u05e2\u05d5\u05d3';
+catalog['parties'] = '\u05de\u05e4\u05dc\u05d2\u05d5\u05ea';
+catalog['service time'] = '\u05d6\u05de\u05df \u05d1\u05db\u05e0\u05e1\u05ea';
+catalog['votes'] = '\u05d4\u05e6\u05d1\u05e2\u05d5\u05ea';
+
+
+function gettext(msgid) {
+  var value = catalog[msgid];
+  if (typeof(value) == 'undefined') {
+    return msgid;
+  } else {
+    return (typeof(value) == 'string') ? value : value[0];
+  }
+}
+
+function ngettext(singular, plural, count) {
+  value = catalog[singular];
+  if (typeof(value) == 'undefined') {
+    return (count == 1) ? singular : plural;
+  } else {
+    return value[pluralidx(count)];
+  }
+}
+
+function gettext_noop(msgid) { return msgid; }
+
+function pgettext(context, msgid) {
+  var value = gettext(context + '' + msgid);
+  if (value.indexOf('') != -1) {
+    value = msgid;
+  }
+  return value;
+}
+
+function npgettext(context, singular, plural, count) {
+  var value = ngettext(context + '' + singular, context + '' + plural, count);
+  if (value.indexOf('') != -1) {
+    value = ngettext(singular, plural, count);
+  }
+  return value;
+}
+
+function interpolate(fmt, obj, named) {
+  if (named) {
+    return fmt.replace(/%\(\w+\)s/g, function(match){return String(obj[match.slice(2,-2)])});
+  } else {
+    return fmt.replace(/%s/g, function(match){return String(obj.shift())});
+  }
+}
+
+/* formatting library */
+
+var formats = new Array();
+
+formats['DATETIME_FORMAT'] = 'N j, Y, P';
+formats['DATE_FORMAT'] = 'N j, Y';
+formats['DECIMAL_SEPARATOR'] = '.';
+formats['MONTH_DAY_FORMAT'] = 'F j';
+formats['NUMBER_GROUPING'] = '0';
+formats['TIME_FORMAT'] = 'P';
+formats['FIRST_DAY_OF_WEEK'] = '0';
+formats['TIME_INPUT_FORMATS'] = ['%H:%M:%S', '%H:%M'];
+formats['THOUSAND_SEPARATOR'] = ',';
+formats['DATE_INPUT_FORMATS'] = ['%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y', '%b %d %Y', '%b %d, %Y', '%d %b %Y', '%d %b, %Y', '%B %d %Y', '%B %d, %Y', '%d %B %Y', '%d %B, %Y'];
+formats['YEAR_MONTH_FORMAT'] = 'F Y';
+formats['SHORT_DATE_FORMAT'] = 'm/d/Y';
+formats['SHORT_DATETIME_FORMAT'] = 'm/d/Y P';
+formats['DATETIME_INPUT_FORMATS'] = ['%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M', '%Y-%m-%d', '%m/%d/%Y %H:%M:%S', '%m/%d/%Y %H:%M', '%m/%d/%Y', '%m/%d/%y %H:%M:%S', '%m/%d/%y %H:%M', '%m/%d/%y'];
+
+function get_format(format_type) {
+    var value = formats[format_type];
+    if (typeof(value) == 'undefined') {
+      return msgid;
+    } else {
+      return value;
+    }
+}

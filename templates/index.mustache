@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>{{extratitle}} | {{#_}}Open Knesset{{/_}}</title>
+
+        <meta name="Authors" content="Hasadna">
+        <meta name="License" content="CC-by-sa-3.0 Attribution-ShareAlike 3.0">
+
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" >
+        <meta http-equiv="Content-Language" content="{{LANGUAGE_CODE}}">
+
+        <meta NAME="ROBOTS" content="NOINDEX, NOFOLLOW">
+
+        <link href="{{MEDIA_URL}}css/jquery.jgrowl.css" rel="stylesheet" type="text/css" media="screen" />
+        <link href="{{MEDIA_URL}}css/bootstrap-rtl.css?v=1" rel="stylesheet" type="text/css" media="screen" />
+        <link href="{{MEDIA_URL}}css/common.css?v=1" rel="stylesheet" type="text/css" media="screen" />
+        {{extracss}}
+        <link rel="shortcut icon" href="{{MEDIA_URL}}/img/favicon.png" />
+        <style>
+            body { padding-top:86px;}
+        </style>
+
+      {{extrahead}}
+    </head>
+<body>
+    {{#DEBUG}}
+        <div class="alert-info">
+            <a href="http://oknesset.org/">http://oknesset.org/</a>
+        </div>
+    {{/DEBUG}}
+    <div class="navbar navbar-fixed-top"><div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="brand" style="margin:5px; background:white; width:80px; padding:3px;" href="{{main_url}}">
+                <img src ="{{MEDIA_URL}}/img/oknesset-logo-small.png" alt="{{#gettext}}Open Knesset{{/gettext}}"/>
+            </a>
+            <div id="search" class="pull-right navbar-search">{{search_form}}</div>
+            {{>login_toolbar}}
+            <ul class="nav">
+              {{#main_links}}
+                <li id="{{id}}">
+                    <a href="{{main_url}}">{{#_}}{{name}}{{/_}}</a>
+                </li>
+              {{/main_links}}
+            </ul>
+        </div></div>
+    </div>
+    <div class="container-fluid">
+        Actual html of the page
+        ....
+
+    </div>
+    <div class="container-fluid">
+        <div class="footer">
+            <p><a href="{{about_url}}">{{#_}}Some rights reserved.{{/_}}</a></p>
+        </div>
+    </div>
+
+<script type="text/javascript" src="{{MEDIA_URL}}js/jsi18n.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/jquery.min.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/mustache.js"></script>
+<!-- script type="text/javascript" src="{{MEDIA_URL}}js/ok.render.js"></script> -->
+
+</body></html>
+
