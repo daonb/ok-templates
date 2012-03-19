@@ -24,7 +24,7 @@ class View(object):
     template_name = None
     template_path = None
     template = None
-    template_encoding = None
+    template_encoding = 'utf-8'
     template_extension = 'mustache'
     
     def __init__(self, template=None, context=None, **kwargs):

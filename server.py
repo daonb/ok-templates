@@ -22,9 +22,9 @@ class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
             # serve static files
             self.wfile.write(open(loc).read())
         else:
-            template = self.loader.load_template(loc)
+            template = self.loader.load_template(loc, encoding='utf-8')
             html = pystache.render(template, self.context)
-            self.wfile.write(html)
+            self.wfile.write(html.encode('utf-8'))
         self.send_response(200) # 200 in an HTTP OK Result Code
         self.end_headers()
 

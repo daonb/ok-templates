@@ -112,7 +112,7 @@ class Template(object):
             tag_name = tag_name.strip()
             func = self.modifiers[tag_type]
             replacement = func(self, tag_name)
-            template = template.replace(tag, replacement)
+	    template = template.replace(tag, replacement)
 
         return template
 
@@ -167,11 +167,7 @@ class Template(object):
         """Render a tag without escaping it."""
         return literal(self.view.get(tag_name, ''))
 
-    def render(self, encoding=None):
+    def render(self):
         template = self._render_sections(self.template, self.view)
         result = self._render_tags(template)
-
-        if encoding is not None:
-            result = result.encode(encoding)
-
         return result
