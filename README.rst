@@ -10,8 +10,8 @@ the design and send a pull request
 Quick Start
 -----------
 
-* Clone the repo: `git clone git@github.com:hasadana/ok-templates.git`
-* Start the local server: `python server.py`
+* Clone the repo: ``git clone git@github.com:hasadana/ok-templates.git``
+* Start the local server: ``python server.py``
 * Browse to http://localhost:8000
 
 Designing
