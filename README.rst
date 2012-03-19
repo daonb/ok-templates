@@ -12,7 +12,7 @@ Quick Start
 
 * Clone the repo: ``git clone git@github.com:hasadana/ok-templates.git``
 * Start the local server: ``python server.py``
-* Browse to http://localhost:8000
+* Browse to http://localhost:8000/index
 
 Designing
 ---------
