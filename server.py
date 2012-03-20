@@ -11,7 +11,7 @@ import gettext
 
 PORT = 8000
 COMMON_CONTEXT_FN = 'context.yaml'
-pystache.Loader.template_path = ['templates', 'templates/include']
+pystache.Loader.template_path = ['templates', 'templates/partials']
 
 class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
     common_context = yaml.load(open(COMMON_CONTEXT_FN).read())
