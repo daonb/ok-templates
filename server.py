@@ -22,7 +22,11 @@ class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
             self.wfile.write(open(loc).read())
         else:
             context = self.common_context.copy()
-            context.update(yaml.load(open('templates/%s.yaml' % loc).read()))
+            try:
+                context.update(yaml.load(open('templates/%s.yaml' % loc).read()))
+            except IOError:
+                pass
+
             template = self.loader.load_template(loc, encoding='utf-8')
             html = pystache.render(template, context)
             self.wfile.write(html.encode('utf-8'))
