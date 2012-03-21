@@ -3,24 +3,48 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-20 16:26+0200\n"
+"POT-Creation-Date: 2012-03-21 09:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Last-Translator: Benny Daon<benny@yeda.us>\n"
+"Language-Team: Hebrew\n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/index.mustache.py:5
+#: templates/partials/base_head.mustache.py:1
 msgid "Open Knesset"
 msgstr "כנסת פתוחה"
 
-#: templates/index.mustache.py:58
+#: templates/partials/base_footer.mustache.py:3
 msgid "Some rights reserved."
 msgstr "חלק מהזכויות שמורות"
+
+#: templates/partials/login_toolbar.mustache.py:3
+msgid "Logged in as"
+msgstr ""
+
+#: templates/partials/login_toolbar.mustache.py:4
+msgid "Edit Profile"
+msgstr "ערוך פרופיל"
+
+#: templates/partials/login_toolbar.mustache.py:5
+msgid "Logout"
+msgstr "התנתקות"
+
+#: templates/partials/login_toolbar.mustache.py:8
+msgid "login"
+msgstr "התחברות"
+
+#: templates/partials/base_header.mustache.py:14
+msgid "Legislation"
+msgstr "חקיקה"
+
+#: templates/partials/base_header.mustache.py:15
+msgid "Members"
+msgstr "חברי כנסת"

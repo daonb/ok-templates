@@ -1,2 +1,0 @@
-#!/bin/sh
-xgettext -Lpython -o oknesset.pot -k _t -k gettext -D ../templates -D ../templates/include

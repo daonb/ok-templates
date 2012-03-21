@@ -10,13 +10,14 @@ import gettext
 # current `templates` directory.
 
 PORT = 8000
+LANG = ['he']
 COMMON_CONTEXT_FN = 'context.yaml'
 pystache.Loader.template_path = ['templates', 'templates/partials']
 
 class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
     common_context = yaml.load(open(COMMON_CONTEXT_FN).read())
     loader = pystache.Loader()
-    translation = gettext.translation('mustache', 'locale', fallback=True)
+    translation = gettext.translation('mustache', 'locale', LANG)
 
     def do_GET(self):
         parsed_path = urlparse.urlparse(self.path)
@@ -26,7 +27,7 @@ class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
             template_fn  = 'templates/%s.yaml' % loc
             if os.path.exists(template_fn):
                 context.update(yaml.load(open(template_fn).read()))
-            context['_t'] = lambda x: self.translation.ugettext(x)
+            context['_'] = lambda x: self.translation.ugettext(x)
             template = self.loader.load_template(loc, encoding='utf-8')
             html = pystache.render(template, context)
             # response headers
@@ -50,7 +51,6 @@ class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
 # the next few lines are what happens when ran from the shell:
 # $ python server.py
 if __name__ == "__main__":
-    os.environ['LANG'] = 'he'
     httpd = BaseHTTPServer.HTTPServer(('', PORT), MustachServer)
     print "serving at port", PORT
     httpd.serve_forever()
