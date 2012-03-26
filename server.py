@@ -25,6 +25,7 @@ class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_GET(self):
         parsed_path = urlparse.urlparse(self.path)
         loc = parsed_path.path[1:] # the first char in a '/' so skip it
+        size = parsed_path.params
         if os.path.exists(loc):
             # static file, guess the content-type and serve
             src = open(loc).read()
@@ -51,20 +52,32 @@ class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
             if os.path.exists(context_fn):
                 context.update(json.load(open(context_fn)))
 
-            template = self.loader.load_template(template_name, encoding='utf-8')
-            if not template:
-                self.send_response(500)
-                self.end_headers()
-                return
+            if size == 's':
+                context['main'] = ('<script id="main_mustache" type="text/html">'
+                                     '%s'
+                                   '</script>'
+                                   '<script>'
+                                   '  document.context = %s;'
+                                   '</script>',
+                                   ) % \
+                    (open(os.path.join("templates", app, "%s.mustache"% template_name)).read(),
+                    json.dumps(context))
 
-            context['_'] = lambda x: self.translation.ugettext(x)
-            html = pystache.render(template, context)
-            # response headers
-            self.send_response(200)
-            self.send_header("content-type", "text/html") # 200 in an HTTP OK Result Code
-            self.end_headers()
-            # and the content
-            self.wfile.write(html.encode('utf-8'))
+            else:
+                template = self.loader.load_template(template_name, encoding='utf-8')
+                if not template:
+                    self.send_response(500)
+                    self.end_headers()
+                    return
+
+                context['_'] = lambda x: self.translation.ugettext(x)
+                html = pystache.render(template, context)
+                # response headers
+                self.send_response(200)
+                self.send_header("content-type", "text/html") # 200 in an HTTP OK Result Code
+                self.end_headers()
+                # and the content
+                self.wfile.write(html.encode('utf-8'))
 
 # the next few lines are what happens when ran from the shell:
 # $ python server.py
