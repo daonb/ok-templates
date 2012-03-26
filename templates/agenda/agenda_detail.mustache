@@ -53,15 +53,7 @@
                         <td><a id="party-highlight-{{id}}" href="#">#</a><a class="hashnav item dontwrap" id="party-link-{{id}}" href="{{url}}">{{name}}</a></td>
                         <td class="numeric">{{score}}%</td>
                         <td>
-                            <div id="selected_party_{{id}}_percentile" class="percentile {{#opposition}}percentile_against{{/opposition}}"></div>
-                            <script>
-                                set_percentile('selected_party_{{id}}',{{precentile}});
-                                $('#party-highlight-{{id}}').click(function(){
-                                    $('.party-{{id}}').toggleClass('highlight');
-                                    $('#party-highlight-{{id}}').toggleClass('highlight');
-                                    return false;
-                                });
-                            </script>
+                            <div id="selected_party_{{id}}_percentile" value ="{{percentile}}"class="percentile {{#opposition}}percentile_against{{/opposition}}"></div>
                         </td>
                         </tr>
                 {{/selected_parties}}

@@ -5,7 +5,12 @@
 <body>
     {{> base_header}}
     <div id="main" class="container-fluid">
-        {{{main}}}
+        <script id="main_mustache" type="text/html">
+          %(template)s
+        </script>
+        <script>
+          document.context = %(context)s;
+        </script>
     </div>
     {{> base_footer}}
 </body></html>
