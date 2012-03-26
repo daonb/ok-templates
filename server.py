@@ -4,6 +4,7 @@ import urlparse
 import BaseHTTPServer
 import pystache
 import yaml
+import json
 import gettext
 import mimetypes
 
@@ -13,7 +14,8 @@ import mimetypes
 PORT = 8000
 LANG = ['he']
 COMMON_CONTEXT_FN = 'context.yaml'
-pystache.Loader.template_path = ['templates', 'templates/partials']
+# TODO: this should be automated, maybe using os.walk
+pystache.Loader.template_path = ['templates', 'templates/partials', 'templates/agendas']
 
 class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
     common_context = yaml.load(open(COMMON_CONTEXT_FN).read())
@@ -30,20 +32,30 @@ class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
             mime, enc = mimetypes.guess_type(loc)
             if (mime):
                 self.send_header("content-type", mime) 
-
             self.end_headers()
             self.wfile.write(src)
         else:
-            template = self.loader.load_template(loc, encoding='utf-8')
+            # render a mustache template based on the url
+            url_parts = loc.split('/')
+            app = url_parts[0]
+            if len(url_parts) == 1:
+                template_name = '%s_list' % app
+                context_fn = os.path.join("fixtures", app, "list.json")
+
+            else:
+                template_name = 'agenda_detail'
+                fixture_name = "%s.json" % url_parts[1]
+                context = self.common_context.copy()
+                context_fn = os.path.join("fixtures", app, fixture_name)
+
+            if os.path.exists(context_fn):
+                context.update(json.load(open(context_fn)))
+
+            template = self.loader.load_template(template_name, encoding='utf-8')
             if not template:
                 self.send_response(500)
                 self.end_headers()
                 return
-
-            context = self.common_context.copy()
-            context_fn  = 'templates/%s.yaml' % loc
-            if os.path.exists(context_fn):
-                context.update(yaml.load(open(context_fn).read()))
 
             context['_'] = lambda x: self.translation.ugettext(x)
             html = pystache.render(template, context)
