@@ -1,4 +1,5 @@
 # File: simplehttpserver-example-1.py
+import re
 import os
 import urlparse
 import BaseHTTPServer
@@ -7,6 +8,7 @@ import yaml
 import json
 import gettext
 import mimetypes
+from glob import glob
 
 # minimal web server.  serves mustache templates relative to the
 # current `templates` directory.
@@ -14,9 +16,17 @@ import mimetypes
 PORT = 8000
 LANG = ['he']
 COMMON_CONTEXT_FN = 'context.yaml'
-# TODO: this should be automated, maybe using os.walk
-pystache.Loader.template_path = ['templates', 'templates/partials', 'templates/agenda']
+# TODO: this should pathbe automated, maybe using os.walk
+PARTIAL_PATH = 'templates/partials'
+pystache.Loader.template_path = ['templates', PARTIAL_PATH, 'templates/agenda']
 
+def get_partials():
+    partials = {}
+    for fn in glob('%s/*.mustache' % PARTIAL_PATH):
+        partials[fn[len(PARTIAL_PATH)+1:-9]] = "http://localhost:%s/%s" % (PORT, fn)
+
+    return partials
+        
 class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
     common_context = yaml.load(open(COMMON_CONTEXT_FN).read())
     loader = pystache.Loader()
@@ -56,7 +66,8 @@ class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
             if size == 's':
                 dump = {"template": open(os.path.join("templates", app, "%s.mustache"% template_name)).read(), 
                         "context": json.dumps(context),
-                        "script": open(os.path.join("templates", app, "%s.js"% template_name)).read(),
+                        "app": open(os.path.join("templates", app, "%s.js"% template_name)).read(),
+                        "partials" : json.dumps(get_partials()),
                        }
                 template_name = 'small_base'
 
