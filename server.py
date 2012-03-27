@@ -56,6 +56,7 @@ class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
             if size == 's':
                 dump = {"template": open(os.path.join("templates", app, "%s.mustache"% template_name)).read(), 
                         "context": json.dumps(context),
+                        "script": open(os.path.join("templates", app, "%s.js"% template_name)).read(),
                        }
                 template_name = 'small_base'
 

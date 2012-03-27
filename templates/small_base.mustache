@@ -5,12 +5,22 @@
 <body>
     {{> base_header}}
     <div id="main" class="container-fluid">
-        <script id="main_mustache" type="text/html">
-          %(template)s
-        </script>
-        <script>
-          document.context = %(context)s;
-        </script>
     </div>
+    <script id="main-mustache" type="text/html">
+      %(template)s
+    </script>
     {{> base_footer}}
+    <script>
+      document.context = %(context)s;
+      $(document).ready(function () {
+        try {
+            var html = Mustache.render($("#main-mustache").html(), 
+                                       document.context);
+        } catch (e) {
+            $("#main").html('<h1>Mustache rendering error</h1>'+e);
+        }
+        $("#main").html(html);
+        %(script)s
+      });
+    </script>
 </body></html>
