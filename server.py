@@ -13,6 +13,8 @@ from glob import glob
 # minimal web server.  serves mustache templates relative to the
 # current `templates` directory.
 
+__version__ = "Version 0.1"
+
 PORT = 8000
 LANG = ['he']
 COMMON_CONTEXT_FN = 'context.yaml'
@@ -94,6 +96,7 @@ class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
 # $ python server.py
 if __name__ == "__main__":
     httpd = BaseHTTPServer.HTTPServer(('', PORT), MustachServer)
+    print "ok-templates development server " + __version__
     print "serving at port", PORT
     httpd.serve_forever()
 
