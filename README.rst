@@ -10,7 +10,11 @@ the design and send a pull request
 Quick Start
 -----------
 
-* Clone the repo: ``git clone git@github.com:hasadana/ok-templates.git``
+* Clone the repo: ``git clone git@github.com:daonb/ok-templates.git``
+* if you don't have python installed (you can test for it by typing 
+  ``python`` on your prompt) get it from http://www.python.org/download/.
+  Version 2.7.2 is best
+* Change your working directory to the project's: ``cd ok-templates``
 * Start the local server: ``python server.py``
 * Browse to http://localhost:8000/agenda/1;s
 
@@ -47,7 +51,7 @@ The templates support i18n through gnu's gettext_. You can test if you have it
 installed by running ``gettext --version``. If you don't, the easiest way is to
 run ``apt-get install gettext`` on *Linux* or ``brew install gettext`` for the
 *OSX*, and for the less fortunate ones, try the setup file 
-`here<http://gnuwin32.sourceforge.net/packages/gettext.htm>`_.
+`here <http://gnuwin32.sourceforge.net/packages/gettext.htm>`_.
 To use static text in the the template, use natural language and wrap it in
 ``{{#_}}Natural Language{{/_}}``.  Once you've added strings to be translated
 you need to update the ``.po`` file.  First run ``python makemsgs.py`` to update
