@@ -64,5 +64,5 @@ meaningful commit message and send a pull request to `hasadna's fork`_
 
 .. _Mustache: http://mustache.github.com
 .. _gettext: http://www.gnu.org/software/gettext/
-.. _hasadna's fork: https://github.com/ohasadna/ok-templates
+.. _hasadna's fork: https://github.com/hasadna/ok-templates
 .. _poedit: http://www.poedit.net/
