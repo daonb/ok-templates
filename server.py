@@ -58,7 +58,7 @@ class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
                 context_fn = os.path.join("fixtures", app, "list.json")
 
             else:
-                template_name = 'agenda_detail'
+                template_name = '%s_detail' % app
                 fixture_name = "%s.json" % url_parts[1]
                 context_fn = os.path.join("fixtures", app, fixture_name)
 
@@ -66,9 +66,14 @@ class MustachServer(BaseHTTPServer.BaseHTTPRequestHandler):
                 context.update(json.load(open(context_fn)))
 
             if size == 's':
+                try:
+                    app_code = open(os.path.join("templates", app, "%s.js"% template_name)).read()
+                except IOError:
+                    app_code = ''
+
                 dump = {"template": open(os.path.join("templates", app, "%s.mustache"% template_name)).read(), 
                         "context": json.dumps(context),
-                        "app": open(os.path.join("templates", app, "%s.js"% template_name)).read(),
+                        "app": app_code,
                         "partials" : json.dumps(get_partials()),
                        }
                 template_name = 'small_base'
